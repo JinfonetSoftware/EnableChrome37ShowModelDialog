@@ -6,7 +6,7 @@
 
 #include <MsgBoxConstants.au3>
 
-MsgBox($MB_SYSTEMMODAL, "OS Type:", @OSType & @OSVersion);
+;MsgBox($MB_SYSTEMMODAL, "OS Type:", @OSType & @OSVersion);
 
 Global $vLang = _GetLanguage(@OSLang)
 Global $vLocale = "Unknown"
@@ -20,7 +20,11 @@ ElseIf $vLang == "Chinese" Then
 EndIf
 
 If $vLocale == "en-US" Then
-   Global $vWinNameMain = "Group Policy"
+   If @OSVersion == "WIN_XP" Then
+	  Global $vWinNameMain = "Group Policy"
+   Else
+	  Global $vWinNameMain = "Local Group Policy Editor"
+   EndIf
    Global $vWinNameAddRemoveTemplates = "Add/Remove Templates"
    Global $vWinNamePolicyTemplates = "Policy Templates"
    Global $vWinNameConfirmFileReplace = "Confirm File Replace"
@@ -28,30 +32,30 @@ If $vLocale == "en-US" Then
    Global $vWinNameEnableDeprecatedWebPlatformFeautresProperties = "Enable deprecated web platform features Properties"
    Global $vItemAdministrativeTemplates = "a"
    Global $vItemClassicAdministrativeTemplate = "c"
-ElseIf $vLocale == "zh-CN" Then
-;   Global $vWinNameMain = String("本地组策略编辑器")
-   Global $vWinNameMain = String("��������ޱ༭��")
-;   Global $vWinNameAddRemoveTemplates = "添加/删除模板"
-;   Global $vWinNamePolicyTemplates = "策略模板"
-;   Global $vWinNameConfirmFileReplace = "Confirm File Replace"
-;   Global $vWinNameCopyFile = "复制文件"
-;   Global $vWinNameEnableDeprecatedWebPlatformFeautresProperties = "Enable deprecated web platform features Properties"
-;   Global $vItemAdministrativeTemplates = "管"
-   Global $vItemAdministrativeTemplates = "��"
-   Global $vItemClassicAdministrativeTemplate = "��"
+ElseIf $vLocale == "zh-CN-NotSupportedYet" Then
+   Global $vWinNameMain = String("本地组策略编辑器")
+   Global $vWinNameAddRemoveTemplates = "添加/删除模板"
+   Global $vWinNamePolicyTemplates = "策略模板"
+   Global $vWinNameConfirmFileReplace = "Confirm File Replace"
+   Global $vWinNameCopyFile = "复制文件"
+   Global $vWinNameEnableDeprecatedWebPlatformFeautresProperties = "Enable deprecated web platform features Properties"
+   Global $vItemAdministrativeTemplates = "管"
+   Global $vItemClassicAdministrativeTemplate = ""
 Else
    MsgBox( 0, "Error", "Unsupported operating system language: " & $vLang & ". Now exiting ...")
    Exit
 Endif
 
 
-closeAllWindow ($vWinNameMain)
+;closeAllWindow ($vWinNameMain)
 Run(@ComSpec & " /c gpedit.msc", "", @SW_HIDE)
 waitWindow($vWinNameMain)
 Sleep(250)
 
 ; Add Administrative Tempaltes
-Send ($vItemAdministrativeTemplates)
+;MsgBox($MB_SYSTEMMODAL, "Sending Key:", $vItemAdministrativeTemplates);
+;Send ("a")
+Send ("{ASC 065}")
 ;emmitChar($vItemAdministrativeTemplates)
 Sleep (250)
 Send ("!aa")
