@@ -4,32 +4,59 @@
 ;				version 0.9.0				 Author Jin Zhengyu
 ;;
 
+#include <MsgBoxConstants.au3>
+
+MsgBox($MB_SYSTEMMODAL, "OS Type:", @OSType & @OSVersion);
+
 Global $vLang = _GetLanguage(@OSLang)
 Global $vLocale = "Unknown"
 
 If $vLang == "English" Then
    $vLocale = "en-US"
+ElseIf $vLang == "Chinese" Then
+   If @OSLang == "0804" Then
+	  $vLocale = "zh-CN"
+   EndIf
 EndIf
 
 If $vLocale == "en-US" Then
    Global $vWinNameMain = "Group Policy"
    Global $vWinNameAddRemoveTemplates = "Add/Remove Templates"
    Global $vWinNamePolicyTemplates = "Policy Templates"
+   Global $vWinNameConfirmFileReplace = "Confirm File Replace"
+   Global $vWinNameCopyFile = "Copy File"
    Global $vWinNameEnableDeprecatedWebPlatformFeautresProperties = "Enable deprecated web platform features Properties"
+   Global $vItemAdministrativeTemplates = "a"
+   Global $vItemClassicAdministrativeTemplate = "c"
+ElseIf $vLocale == "zh-CN" Then
+;   Global $vWinNameMain = String("Êú¨Âú∞ÁªÑÁ≠ñÁï•ÁºñËæëÂô®")
+   Global $vWinNameMain = String("±æµÿ◊È≤ﬂ¬ﬁ±‡º≠∆˜")
+;   Global $vWinNameAddRemoveTemplates = "Ê∑ªÂä†/Âà†Èô§Ê®°Êùø"
+;   Global $vWinNamePolicyTemplates = "Á≠ñÁï•Ê®°Êùø"
+;   Global $vWinNameConfirmFileReplace = "Confirm File Replace"
+;   Global $vWinNameCopyFile = "Â§çÂà∂Êñá‰ª∂"
+;   Global $vWinNameEnableDeprecatedWebPlatformFeautresProperties = "Enable deprecated web platform features Properties"
+;   Global $vItemAdministrativeTemplates = "ÁÆ°"
+   Global $vItemAdministrativeTemplates = "π‹"
+   Global $vItemClassicAdministrativeTemplate = "æ≠"
 Else
    MsgBox( 0, "Error", "Unsupported operating system language: " & $vLang & ". Now exiting ...")
    Exit
 Endif
 
 
-WinClose ($vWinNameMain)
+closeAllWindow ($vWinNameMain)
 Run(@ComSpec & " /c gpedit.msc", "", @SW_HIDE)
 waitWindow($vWinNameMain)
+Sleep(250)
 
 ; Add Administrative Tempaltes
-Send ("a")
+Send ($vItemAdministrativeTemplates)
+;emmitChar($vItemAdministrativeTemplates)
 Sleep (250)
 Send ("!aa")
+Exit
+
 waitWindow ($vWinNameAddRemoveTemplates)
 Sleep (500)
 Send ("!a")
@@ -42,16 +69,33 @@ Sleep (500)
 $vActiveWinTitle = WinGetTitle ("")
 Sleep (500)
 
-If $vActiveWinTitle <> $vWinNameAddRemoveTemplates Then
+If $vActiveWinTitle == $vWinNameConfirmFileReplace Then
    Send ("!n")
    Sleep (250)
+ElseIf $vActiveWinTitle == $vWinNameCopyFile Then
+   Send ("{TAB}")
+   Sleep (250)
+   Send ("{TAB}")
+   Sleep (250)
+   Send ("{ENTER}")
+   Sleep (250)
 EndIf
+
 Send ("!l")
 Sleep (750)
 
 ;Configure Chrome
 Send ("{RIGHT}")
 Sleep (250)
+
+;WIN_7 has put itme in to classic ADM
+If @OSVersion <> "WIN_XP" Then
+   Send ($vItemClassicAdministrativeTemplate)
+   Sleep (250)
+   Send ("{RIGHT}")
+   Sleep (250)
+EndIf
+
 Send ("g")
 Sleep (250)
 Send ("{RIGHT}")
@@ -98,7 +142,7 @@ Sleep (250)
 Send ("{ENTER}")
 Sleep (500)
 
-WinClose ($vWinNameMain)
+;WinClose ($vWinNameMain)
 
 ;;;;;;;;;;; Utils ;;;;;;;;;
 Func emmitChar($pString)
@@ -119,6 +163,8 @@ Func _GetLanguage($pLocale)
     ; $pLocale is four characters in length, the first two is the dialect and the remaining two are the language group.
     ; Therefore we only require the language group and therefore select the two right-most characters.
     Switch StringRight($pLocale, 2)
+	    Case "04"
+			Return "Chinese"
         Case "07"
             Return "German"
         Case "09"
@@ -148,3 +194,12 @@ Func _GetLanguage($pLocale)
     EndSwitch
 EndFunc   ;==>_GetLanguage
 
+Func closeAllWindow($pWinName)
+   Local $vList = WinList($pWinName)
+   Local $vMsg = ""
+
+   For $i = 1 To $vList[0][0]
+	   MsgBox($MB_SYSTEMMODAL, "", "Title: " & $vList[$i][0] & @CRLF & "Handle: " & $vList[$i][1])
+	   MsgBox($MB_SYSTEMMODAL, "Task Status:", WinClose($pWinName));
+   Next
+EndFunc
