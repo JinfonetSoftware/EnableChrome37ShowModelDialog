@@ -28,7 +28,7 @@ If $vLocale == "en-US" Then
    Global $vWinNameAddRemoveTemplates = "Add/Remove Templates"
    Global $vWinNamePolicyTemplates = "Policy Templates"
    Global $vWinNameConfirmFileReplace = "Confirm File Replace"
-   Global $vWinNameCopyFile = "Copy File"
+   Global $vWinNameCopyFile = ""
    Global $vWinNameReplaceOrSkip = ""
    Global $vWinNameEnableDeprecatedWebPlatformFeautresProperties = "Enable deprecated web platform features Properties"
    Global $vWinNameDisplayContent = ""
@@ -109,7 +109,7 @@ Sleep (750)
 Send ("{RIGHT}")
 Sleep (250)
 
-;WIN_7 has put itme in to classic ADM
+;Since WIN_7 has put itme in to classic ADM
 If @OSVersion <> "WIN_XP" Then
    Send ($vItemClassicAdministrativeTemplate)
    Sleep (250)
@@ -167,7 +167,7 @@ If @OSVersion == "WIN_XP" Then
    Sleep (250)
    Send ("{ENTER}")
    Sleep (500)
-ElseIf StringLeft(@OSVersion, 5) == "WIN_8" Then
+ElseIf StringLeft(@OSVersion, 5) == "WIN_8" Or @OSVersion == "WIN_7" Then
    Send ("{TAB}")
    Sleep (250)
    Send ("{TAB}")
