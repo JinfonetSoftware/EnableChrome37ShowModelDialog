@@ -1,4 +1,4 @@
-;;
+﻿;;
 ;   Enanble Chrome 37 deprecated feature of ShowModalDialog_EffectiveUntil20150430 with Autoit3 Script
 ;	This is a Jinfonet Software, Inc. software issue under MIT License.
 ;				version 0.9.0				 Author Jin Zhengyu
@@ -29,43 +29,54 @@ If $vLocale == "en-US" Then
    Global $vWinNamePolicyTemplates = "Policy Templates"
    Global $vWinNameConfirmFileReplace = "Confirm File Replace"
    Global $vWinNameCopyFile = "Copy File"
+   Global $vWinNameReplaceOrSkip = ""
    Global $vWinNameEnableDeprecatedWebPlatformFeautresProperties = "Enable deprecated web platform features Properties"
+   Global $vWinNameDisplayContent = ""
    Global $vItemAdministrativeTemplates = "a"
    Global $vItemClassicAdministrativeTemplate = "c"
-ElseIf $vLocale == "zh-CN-NotSupportedYet" Then
+   Global $vItemEnableDeprecatedWebPlatformFeatures = "enable deprecated web platform features"
+ElseIf $vLocale == "zh-CN" Then
    Global $vWinNameMain = String("本地组策略编辑器")
    Global $vWinNameAddRemoveTemplates = "添加/删除模板"
    Global $vWinNamePolicyTemplates = "策略模板"
    Global $vWinNameConfirmFileReplace = "Confirm File Replace"
    Global $vWinNameCopyFile = "复制文件"
-   Global $vWinNameEnableDeprecatedWebPlatformFeautresProperties = "Enable deprecated web platform features Properties"
+   Global $vWinNameReplaceOrSkip = "替换或跳过文件"
+   Global $vWinNameEnableDeprecatedWebPlatformFeautresProperties = "启用已弃用的网络平台功能"
+   Global $vWinNameDisplayContent = "显示内容"
    Global $vItemAdministrativeTemplates = "管"
-   Global $vItemClassicAdministrativeTemplate = ""
+   Global $vItemClassicAdministrativeTemplate = "经"
+   Global $vItemEnableDeprecatedWebPlatformFeatures = "启用已弃用的网络平台功能"
 Else
    MsgBox( 0, "Error", "Unsupported operating system language: " & $vLang & ". Now exiting ...")
    Exit
 Endif
 
 
-;closeAllWindow ($vWinNameMain)
+closeAllWindow ($vWinNameMain)
 Run(@ComSpec & " /c gpedit.msc", "", @SW_HIDE)
 waitWindow($vWinNameMain)
 Sleep(250)
 
 ; Add Administrative Tempaltes
 ;MsgBox($MB_SYSTEMMODAL, "Sending Key:", $vItemAdministrativeTemplates);
-;Send ("a")
-Send ("{ASC 065}")
-;emmitChar($vItemAdministrativeTemplates)
+emmitChar($vItemAdministrativeTemplates)
 Sleep (250)
 Send ("!aa")
-Exit
+Sleep (250)
 
 waitWindow ($vWinNameAddRemoveTemplates)
 Sleep (500)
 Send ("!a")
 waitWindow ($vWinNamePolicyTemplates)
 Sleep (250)
+
+;Switch IME to english before entering
+If $vLocale == "zh-CN" And StringLeft(@OSVersion, 5) == "WIN_8" Then
+   Send ("{SHIFTDOWN}{SHIFTUP}")
+   Sleep (250)
+EndIf
+
 Send ( @WorkingDir & "\policy_templates\windows\adm\" & $vLocale & "\chrome.adm")
 Sleep (250)
 Send ("!o")
@@ -83,7 +94,13 @@ ElseIf $vActiveWinTitle == $vWinNameCopyFile Then
    Sleep (250)
    Send ("{ENTER}")
    Sleep (250)
+ElseIf $vActiveWinTitle == $vWinNameReplaceOrSkip Then
+   ;MsgBox($MB_SYSTEMMODAL, "OS Type:", @OSType & @OSVersion);
+   Send ("!s")
+   Sleep (250)
 EndIf
+
+waitWindow ($vWinNameAddRemoveTemplates)
 
 Send ("!l")
 Sleep (750)
@@ -105,15 +122,16 @@ Sleep (250)
 Send ("{RIGHT}")
 Sleep (250)
 Send ("g")
-Sleep (250)
+Sleep (500)
 Send ("{TAB}")
 Sleep (250)
 
 ;Open "Enable deprecated web platform features"
-emmitChar (StringLeft("enable deprecated web platform features", 10))
+emmitChar (StringLeft($vItemEnableDeprecatedWebPlatformFeatures, 10))
 Sleep (250)
 Send ("{ENTER}")
 Sleep (250)
+
 waitWindow($vWinNameEnableDeprecatedWebPlatformFeautresProperties)
 Sleep (250)
 Send ("!c")
@@ -124,36 +142,56 @@ Send ("!e")
 Sleep (250)
 Send ("{TAB}")
 Sleep (250)
+If @OSVersion <> "WIN_XP" Then
+   Send ("{TAB}")
+   Sleep (250)
+Endif
 Send ("{SPACE}")
 Sleep (500)
 
 ;Add item
-Send ("!a")
-Sleep (500)
-Send ("ShowModalDialog_EffectiveUntil20150430")
-Sleep (250)
-Send ("{ENTER}")
-Sleep (500)
+If @OSVersion == "WIN_XP" Then
+   Send ("!a")
+   Sleep (500)
+   Send ("ShowModalDialog_EffectiveUntil20150430")
+   Sleep (250)
+   Send ("{ENTER}")
+   Sleep (500)
+   Send ("{ENTER}")
+   Sleep (250)
+   Send ("{TAB}")
+   Sleep (250)
+   Send ("{TAB}")
+   Sleep (250)
+   Send ("{TAB}")
+   Sleep (250)
+   Send ("{ENTER}")
+   Sleep (500)
+ElseIf StringLeft(@OSVersion, 5) == "WIN_8" Then
+   Send ("{TAB}")
+   Sleep (250)
+   Send ("{TAB}")
+   Sleep (250)
+   Send ("ShowModalDialog_EffectiveUntil20150430")
+   Sleep (250)
+   Send ("!o")
+   Sleep (250)
+   Send ("{TAB}")
+   Sleep (250)
+   Send ("{TAB}")
+   Sleep (250)
+   Send ("{ENTER}")
+   Sleep (500)
+EndIf
 
-Send ("{ENTER}")
-Sleep (250)
-Send ("{TAB}")
-Sleep (250)
-Send ("{TAB}")
-Sleep (250)
-Send ("{TAB}")
-Sleep (250)
-Send ("{ENTER}")
-Sleep (500)
-
-;WinClose ($vWinNameMain)
+WinClose ($vWinNameMain)
 
 ;;;;;;;;;;; Utils ;;;;;;;;;
 Func emmitChar($pString)
-	  For $vIndex=0 To StringLen($pString)
-		 Send (StringMid($pString, $vIndex, 1))
-		 Sleep (60)
-	  Next
+   For $vIndex=0 To StringLen($pString)
+	  Send (StringMid($pString, $vIndex, 1))
+	  Sleep (60)
+   Next
 EndFunc
 
 Func waitWindow ($pWinName)
@@ -203,7 +241,6 @@ Func closeAllWindow($pWinName)
    Local $vMsg = ""
 
    For $i = 1 To $vList[0][0]
-	   MsgBox($MB_SYSTEMMODAL, "", "Title: " & $vList[$i][0] & @CRLF & "Handle: " & $vList[$i][1])
-	   MsgBox($MB_SYSTEMMODAL, "Task Status:", WinClose($pWinName));
+	   WinClose($pWinName);
    Next
 EndFunc
