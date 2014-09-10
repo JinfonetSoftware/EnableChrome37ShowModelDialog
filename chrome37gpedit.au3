@@ -22,27 +22,44 @@ EndIf
 If $vLocale == "en-US" Then
    If @OSVersion == "WIN_XP" Then
 	  Global $vWinNameMain = "Group Policy"
+	  Global $vWinNameEnableDeprecatedWebPlatformFeautresProperties = "Enable deprecated web platform features Properties"
    Else
 	  Global $vWinNameMain = "Local Group Policy Editor"
+	  Global $vWinNameEnableDeprecatedWebPlatformFeautresProperties = "Enable deprecated web platform features"
    EndIf
    Global $vWinNameAddRemoveTemplates = "Add/Remove Templates"
    Global $vWinNamePolicyTemplates = "Policy Templates"
+
+   ;WIN_XP
    Global $vWinNameConfirmFileReplace = "Confirm File Replace"
-   Global $vWinNameCopyFile = ""
+   ;WIN_7
+   Global $vWinNameCopyFile = "Copy File"
+   ;WIN_8
    Global $vWinNameReplaceOrSkip = ""
-   Global $vWinNameEnableDeprecatedWebPlatformFeautresProperties = "Enable deprecated web platform features Properties"
+
    Global $vWinNameDisplayContent = ""
    Global $vItemAdministrativeTemplates = "a"
-   Global $vItemClassicAdministrativeTemplate = "c"
+   Global $vItemClassicAdministrativeTemplate = "classic"
    Global $vItemEnableDeprecatedWebPlatformFeatures = "enable deprecated web platform features"
 ElseIf $vLocale == "zh-CN" Then
-   Global $vWinNameMain = String("本地组策略编辑器")
+   If @OSVersion == "WIN_XP" Then
+	  Global $vWinNameMain = "组策略"
+	  Global $vWinNameEnableDeprecatedWebPlatformFeautresProperties = "Enable deprecated web platform features Properties"
+   Else
+	  Global $vWinNameMain = String("本地组策略编辑器")
+	  Global $vWinNameEnableDeprecatedWebPlatformFeautresProperties = "启用已弃用的网络平台功能"
+   EndIf
    Global $vWinNameAddRemoveTemplates = "添加/删除模板"
    Global $vWinNamePolicyTemplates = "策略模板"
+
+   ;WIN_XP
    Global $vWinNameConfirmFileReplace = "Confirm File Replace"
+   ;WIN_7
    Global $vWinNameCopyFile = "复制文件"
+   ;WIN_8
    Global $vWinNameReplaceOrSkip = "替换或跳过文件"
-   Global $vWinNameEnableDeprecatedWebPlatformFeautresProperties = "启用已弃用的网络平台功能"
+
+   Global $vWinNameEnableDeprecatedWebPlatformFeautresProperties = ""
    Global $vWinNameDisplayContent = "显示内容"
    Global $vItemAdministrativeTemplates = "管"
    Global $vItemClassicAdministrativeTemplate = "经"
@@ -105,13 +122,14 @@ waitWindow ($vWinNameAddRemoveTemplates)
 Send ("!l")
 Sleep (750)
 
+
 ;Configure Chrome
 Send ("{RIGHT}")
 Sleep (250)
 
 ;Since WIN_7 has put itme in to classic ADM
 If @OSVersion <> "WIN_XP" Then
-   Send ($vItemClassicAdministrativeTemplate)
+   emmitChar ($vItemClassicAdministrativeTemplate)
    Sleep (250)
    Send ("{RIGHT}")
    Sleep (250)
@@ -167,7 +185,7 @@ If @OSVersion == "WIN_XP" Then
    Sleep (250)
    Send ("{ENTER}")
    Sleep (500)
-ElseIf StringLeft(@OSVersion, 5) == "WIN_8" Or @OSVersion == "WIN_7" Then
+ElseIf (StringLeft(@OSVersion, 5) == "WIN_8") Or (@OSVersion == "WIN_7") Then
    Send ("{TAB}")
    Sleep (250)
    Send ("{TAB}")
