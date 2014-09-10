@@ -6,7 +6,8 @@
 
 #include <MsgBoxConstants.au3>
 
-;MsgBox($MB_SYSTEMMODAL, "OS Type:", @OSType & @OSVersion);
+; This script requires full Administrative rights
+#RequireAdmin
 
 Global $vLang = _GetLanguage(@OSLang)
 Global $vLocale = "Unknown"
