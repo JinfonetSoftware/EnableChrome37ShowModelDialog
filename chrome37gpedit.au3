@@ -9,6 +9,7 @@
 ; This script requires full Administrative rights
 #RequireAdmin
 
+
 Global $vLang = _GetLanguage(@OSLang)
 Global $vLocale = "Unknown"
 
@@ -19,6 +20,9 @@ ElseIf $vLang == "Chinese" Then
 	  $vLocale = "zh-CN"
    EndIf
 EndIf
+
+;;;;;;;;;;;;;;;;
+$vLocale = "zh-CN"
 
 If $vLocale == "en-US" Then
    If @OSVersion == "WIN_XP" Then
@@ -60,7 +64,6 @@ ElseIf $vLocale == "zh-CN" Then
    ;WIN_8
    Global $vWinNameReplaceOrSkip = "替换或跳过文件"
 
-   Global $vWinNameEnableDeprecatedWebPlatformFeautresProperties = ""
    Global $vWinNameDisplayContent = "显示内容"
    Global $vItemAdministrativeTemplates = "管"
    Global $vItemClassicAdministrativeTemplate = "经"
@@ -70,9 +73,9 @@ Else
    Exit
 Endif
 
-
 closeAllWindow ($vWinNameMain)
 Run(@ComSpec & " /c gpedit.msc", "", @SW_HIDE)
+; ToDo: compares the $vWinNameMain with current active window.
 waitWindow($vWinNameMain)
 Sleep(250)
 
