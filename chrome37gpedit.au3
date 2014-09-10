@@ -21,9 +21,6 @@ ElseIf $vLang == "Chinese" Then
    EndIf
 EndIf
 
-;;;;;;;;;;;;;;;;
-$vLocale = "zh-CN"
-
 If $vLocale == "en-US" Then
    If @OSVersion == "WIN_XP" Then
 	  Global $vWinNameMain = "Group Policy"
