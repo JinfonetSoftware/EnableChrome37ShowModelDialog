@@ -15,7 +15,7 @@
 
 * Download and install Autoit v3 from http://www.autoitscript.com
 * Extract the script into a working directory
-* Download and extract chrome policy templates into the script working directroy from http://dl.google.com/dl/edgedl/chrome/policy/policy_templates.zip
+* Download and extract chrome policy templates (updated for Chromium 37+) into the script working directroy from http://dl.google.com/dl/edgedl/chrome/policy/policy_templates.zip
 * Run it: Run the script with Autoit v3
 * Deploy it: Compile the script into exe and distribute the executable to target machine
 
