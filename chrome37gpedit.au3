@@ -49,7 +49,7 @@ If $vLocale == "en-US" Then
 ElseIf $vLocale == "zh-CN" Then
    If @OSVersion == "WIN_XP" Then
 	  Global $vWinNameMain = "组策略"
-	  Global $vWinNameEnableDeprecatedWebPlatformFeautresProperties = "Enable deprecated web platform features Properties"
+	  Global $vWinNameEnableDeprecatedWebPlatformFeautresProperties = "启用已弃用的网络平台功能 属性"
    Else
 	  Global $vWinNameMain = String("本地组策略编辑器")
 	  Global $vWinNameEnableDeprecatedWebPlatformFeautresProperties = "启用已弃用的网络平台功能"
@@ -58,7 +58,7 @@ ElseIf $vLocale == "zh-CN" Then
    Global $vWinNamePolicyTemplates = "策略模板"
 
    ;WIN_XP
-   Global $vWinNameConfirmFileReplace = "Confirm File Replace"
+   Global $vWinNameConfirmFileReplace = "确认文件替换"
    ;WIN_7
    Global $vWinNameCopyFile = "复制文件"
    ;WIN_8
