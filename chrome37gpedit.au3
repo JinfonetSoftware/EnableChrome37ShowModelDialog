@@ -1,7 +1,7 @@
 ﻿;;
 ;   Enanble Chrome 37 deprecated feature of ShowModalDialog_EffectiveUntil20150430 with Autoit3 Script
 ;	This is a Jinfonet Software, Inc. software issue under MIT License.
-;				version 0.9.0				 Author Jin Zhengyu
+;				version 0.9.1				 Author Jin Zhengyu
 ;;
 
 #include <MsgBoxConstants.au3>
@@ -189,7 +189,8 @@ If @OSVersion == "WIN_XP" Then
    Sleep (250)
    Send ("{ENTER}")
    Sleep (500)
-ElseIf (StringLeft(@OSVersion, 5) == "WIN_8") Or (@OSVersion == "WIN_7") Then
+; ToDo Check all supportd platform / locale ElseIf (StringLeft(@OSVersion, 5) == "WIN_8") Or (@OSVersion == "WIN_7") Then
+Else
    Send ("{TAB}")
    Sleep (250)
    Send ("{TAB}")
