@@ -78,7 +78,7 @@ Sleep(250)
 
 ; Add Administrative Tempaltes
 ;MsgBox($MB_SYSTEMMODAL, "Sending Key:", $vItemAdministrativeTemplates);
-emmitChar($vItemAdministrativeTemplates)
+emitChar($vItemAdministrativeTemplates)
 Sleep (250)
 Send ("!aa")
 Sleep (250)
@@ -130,7 +130,7 @@ Sleep (250)
 
 ;Since WIN_7 has put itme in to classic ADM
 If @OSVersion <> "WIN_XP" Then
-   emmitChar ($vItemClassicAdministrativeTemplate)
+   emitChar ($vItemClassicAdministrativeTemplate)
    Sleep (250)
    Send ("{RIGHT}")
    Sleep (250)
@@ -146,7 +146,7 @@ Send ("{TAB}")
 Sleep (250)
 
 ;Open "Enable deprecated web platform features"
-emmitChar (StringLeft($vItemEnableDeprecatedWebPlatformFeatures, 10))
+emitChar (StringLeft($vItemEnableDeprecatedWebPlatformFeatures, 10))
 Sleep (250)
 Send ("{ENTER}")
 Sleep (250)
@@ -207,7 +207,7 @@ EndIf
 WinClose ($vWinNameMain)
 
 ;;;;;;;;;;; Utils ;;;;;;;;;
-Func emmitChar($pString)
+Func emitChar($pString)
    For $vIndex=0 To StringLen($pString)
 	  Send (StringMid($pString, $vIndex, 1))
 	  Sleep (60)
