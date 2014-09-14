@@ -16,7 +16,7 @@ Global $vLocale = "Unknown"
 
 $vLocale = getOSLocale(); getThreadLocale()
 
-MsgBox(0, "Locale", getOSLocale() & ":" & $vLocale)
+;MsgBox(0, "Locale", getOSLocale() & ":" & $vLocale)
 
 
 If $vLocale == "en-US" Then
@@ -167,7 +167,9 @@ Sleep (500)
 If @OSVersion == "WIN_XP" Then
    Send ("!a")
    Sleep (500)
-   Send ("ShowModalDialog_EffectiveUntil20150430")
+   ;Send ("ShowModalDialog_EffectiveUntil20150430")
+   ClipPut("ShowModalDialog_EffectiveUntil20150430")
+   Send ("^v")
    Sleep (250)
    Send ("{ENTER}")
    Sleep (500)
