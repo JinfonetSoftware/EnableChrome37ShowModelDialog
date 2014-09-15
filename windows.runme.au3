@@ -35,9 +35,9 @@ If $vLocale == "en-US" Then
    ;WIN_7
    Global $vWinNameCopyFile = "Copy File"
    ;WIN_8
-   Global $vWinNameReplaceOrSkip = ""
+   Global $vWinNameReplaceOrSkip = "Replace or Skip Files"
 
-   Global $vWinNameDisplayContent = ""
+   Global $vWinNameShowContents = "Show Contents"
    Global $vItemAdministrativeTemplates = "a"
    Global $vItemClassicAdministrativeTemplate = "classic"
    Global $vItemEnableDeprecatedWebPlatformFeatures = "enable deprecated web platform features"
@@ -59,7 +59,7 @@ ElseIf $vLocale == "zh-CN" Then
    ;WIN_8
    Global $vWinNameReplaceOrSkip = "替换或跳过文件"
 
-   Global $vWinNameDisplayContent = "显示内容"
+   Global $vWinNameShowContents = "显示内容"
    Global $vItemAdministrativeTemplates = "管"
    Global $vItemClassicAdministrativeTemplate = "经"
    Global $vItemEnableDeprecatedWebPlatformFeatures = "启用已弃用的网络平台功能"
@@ -192,6 +192,7 @@ If @OSVersion == "WIN_XP" Then
    Sleep (500)
 ; ToDo Check all supportd platform / locale ElseIf (StringLeft(@OSVersion, 5) == "WIN_8") Or (@OSVersion == "WIN_7") Then
 Else
+   waitWindow ($vWinNameShowContents)
    Send ("{TAB}")
    Sleep (250)
    Send ("{TAB}")
