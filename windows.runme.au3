@@ -151,7 +151,7 @@ Send ("{ENTER}")
 Sleep (250)
 
 waitWindow($vWinNameEnableDeprecatedWebPlatformFeautresProperties)
-Sleep (250)
+Sleep (500)
 Send ("!c")
 Sleep (250)
 Send ("!a")
