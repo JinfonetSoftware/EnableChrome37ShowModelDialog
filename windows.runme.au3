@@ -146,7 +146,7 @@ Sleep (250)
 Send ("g{ENTER}")
 Sleep (500)
 Send ("{TAB}")
-Sleep (250)
+Sleep (500)
 
 ;Open "Enable deprecated web platform features"
 emitChar (StringLeft($vItemEnableDeprecatedWebPlatformFeatures, 10))
