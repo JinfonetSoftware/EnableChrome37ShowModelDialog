@@ -124,12 +124,12 @@ EndIf
 waitWindow ($vWinNameAddRemoveTemplates)
 Sleep (250)
 Send ("!l")
-Sleep (1000)
+Sleep (2000)
 
 
 ;Configure Chrome
 Send ("{RIGHT}")
-Sleep (250)
+Sleep (500)
 
 ;Since WIN_7 has put itme in to classic ADM
 If @OSVersion <> "WIN_XP" Then
@@ -142,11 +142,11 @@ EndIf
 Send ("g{ENTER}")
 Sleep (250)
 Send ("{RIGHT}")
-Sleep (250)
+Sleep (500)
 Send ("g{ENTER}")
-Sleep (500)
+Sleep (750)
 Send ("{TAB}")
-Sleep (500)
+Sleep (750)
 
 ;Open "Enable deprecated web platform features"
 emitChar (StringLeft($vItemEnableDeprecatedWebPlatformFeatures, 10))
