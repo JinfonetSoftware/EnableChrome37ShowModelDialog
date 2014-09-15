@@ -1,7 +1,8 @@
 ﻿;;
 ;   Enanble Chrome 37 deprecated feature of ShowModalDialog_EffectiveUntil20150430 with Autoit3 Script
-;	This is a Jinfonet Software, Inc. software issue under MIT License.
-;				version 0.9.1				 Author Jin Zhengyu
+;	This is a Jinfonet Software, Inc. software, issued under MIT License.
+;				version 0.9.2				 Author Jin Zhengyu
+;				Copyright 2014, Jinfonet Software, Inc. 
 ;;
 
 #include <MsgBoxConstants.au3>
