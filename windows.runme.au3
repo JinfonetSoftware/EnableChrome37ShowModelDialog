@@ -93,9 +93,13 @@ Send ("^v");
 ;Send ( @WorkingDir & "\policy_templates\windows\adm\" & $vLocale & "\chrome.adm")
 Sleep (250)
 Send ("!o")
-Sleep (750)
+Sleep (1000)
+$vActiveWinTitle = WinGetTitle ("")
+Sleep (500)
 
-If @OSVersion == "WIN_XP" Then
+If $vActiveWinTitle == $vWinNameAddRemoveTemplates Then
+   Sleep (250)
+ElseIf @OSVersion == "WIN_XP" Then
    waitWindow($vWinNameConfirmFileReplace)
    Sleep (250)
    Send ("!n")
