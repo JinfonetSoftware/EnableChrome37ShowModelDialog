@@ -94,21 +94,25 @@ Send ("^v");
 Sleep (250)
 Send ("!o")
 Sleep (750)
-$vActiveWinTitle = WinGetTitle ("")
-Sleep (750)
 
-If $vActiveWinTitle == $vWinNameConfirmFileReplace Then
+If @OSVersion == "WIN_XP" Then
+   waitWindow($vWinNameConfirmFileReplace)
+   Sleep (250)
    Send ("!n")
    Sleep (250)
-ElseIf $vActiveWinTitle == $vWinNameCopyFile Then
+ElseIf @OSVersion == "WIN_VISTA" Or @OSVersion == "WIN_7" Then
+   waitWindow($vWinNameCopyFile)
+   Sleep (250)
    Send ("{TAB}")
    Sleep (250)
    Send ("{TAB}")
    Sleep (250)
    Send ("{ENTER}")
    Sleep (250)
-ElseIf $vActiveWinTitle == $vWinNameReplaceOrSkip Then
+ElseIf StringLeft(@OSVersion, 5) == "WIN_8" Then
    ;MsgBox($MB_SYSTEMMODAL, "OS Type:", @OSType & @OSVersion);
+   waitWindow($vWinNameReplaceOrSkip)
+   Sleep (250)
    Send ("!s")
    Sleep (250)
 EndIf
