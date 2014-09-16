@@ -1,8 +1,7 @@
 ﻿;;
 ;   Enanble Chrome 37 deprecated feature of ShowModalDialog_EffectiveUntil20150430 with Autoit3 Script
-;	This is a Jinfonet Software, Inc. software, issued under MIT License.
-;				version 0.9.2				 Author Jin Zhengyu
-;				Copyright 2014, Jinfonet Software, Inc. 
+;	This is a Jinfonet Software, Inc. software issue under MIT License.
+;				version 0.9.1				 Author Jin Zhengyu
 ;;
 
 #include <MsgBoxConstants.au3>
@@ -112,7 +111,9 @@ ElseIf @OSVersion == "WIN_VISTA" Or @OSVersion == "WIN_7" Then
    Sleep (250)
    Send ("{TAB}")
    Sleep (250)
-   Send ("{ENTER}")
+
+   ;;;;;;;;;;;;;;;;;Send ("{ENTER}")
+   Send ("{SPACE}")
    Sleep (250)
 ElseIf StringLeft(@OSVersion, 5) == "WIN_8" Then
    ;MsgBox($MB_SYSTEMMODAL, "OS Type:", @OSType & @OSVersion);
@@ -132,7 +133,7 @@ Sleep (2000)
 Send ("{RIGHT}")
 Sleep (500)
 
-;Since WIN_7 has put itme in to classic ADM
+;Since WIN_VISTA ADM has been put itme in to classic ADM
 If @OSVersion <> "WIN_XP" Then
    emitChar ($vItemClassicAdministrativeTemplate)
    Sleep (250)
@@ -165,7 +166,7 @@ Send ("!e")
 Sleep (250)
 Send ("{TAB}")
 Sleep (250)
-If @OSVersion <> "WIN_XP" Then
+If @OSVersion == "WIN_7" Or StringLeft(@OSVersion, 5) == "WIN_8"  Then
    Send ("{TAB}")
    Sleep (250)
 Endif
@@ -173,7 +174,7 @@ Send ("{SPACE}")
 Sleep (500)
 
 ;Add item
-If @OSVersion == "WIN_XP" Then
+If @OSVersion == "WIN_XP" Or @OSVersion == "WIN_VISTA" Then
    Send ("!a")
    Sleep (500)
    ;Send ("ShowModalDialog_EffectiveUntil20150430")
