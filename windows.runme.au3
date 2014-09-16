@@ -82,7 +82,7 @@ Send ("!aa")
 Sleep (250)
 
 waitWindow ($vWinNameAddRemoveTemplates)
-Sleep (750)
+Sleep (1000)
 Send ("!a")
 Local $vHWndPolicyTemplates = waitWindow ($vWinNamePolicyTemplates)
 Sleep (750)
