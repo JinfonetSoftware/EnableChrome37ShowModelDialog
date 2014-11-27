@@ -21,4 +21,4 @@
 ### Contribution guidelines ###
 
 * The script is issued under MIT license.
-* Pull request [zhengyu.jin@gmail.com](mailto:zhengyu.jin@gmail.com)
+* Contact [zhengyu.jin@gmail.com](mailto:zhengyu.jin@gmail.com)
